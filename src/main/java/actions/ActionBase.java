@@ -20,7 +20,6 @@ import constants.PropertyConst;
  *
  */
 public abstract class ActionBase {
-    //ActionBaseのフィールド
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
@@ -42,18 +41,19 @@ public abstract class ActionBase {
     }
 
     /**
-     * フロントコントローラから直接呼び出されるメソッド
-     * @throws servletException
+     * フロントコントローラから呼び出されるメソッド
+     * @throws ServletException
      * @throws IOException
      */
     public abstract void process() throws ServletException, IOException;
 
     /**
      * パラメータのcommandの値に該当するメソッドを実行する
-     * @throws Servletexception
-     * @throes IOException
+     * @throws ServletException
+     * @throws IOException
      */
-    protected void invoke() throws ServletException, IOException{
+    protected void invoke()
+            throws ServletException, IOException {
 
         Method commandMethod;
         try {
@@ -61,7 +61,7 @@ public abstract class ActionBase {
             //パラメータからcommandを取得
             String command = request.getParameter(ForwardConst.CMD.getValue());
 
-            //commandに該当するメソッドを実行する
+            //ommandに該当するメソッドを実行する
             //(例: action=Employee command=show の場合 EmployeeActionクラスのshow()メソッドを実行する)
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
             commandMethod.invoke(this, new Object[0]); //メソッドに渡す引数はなし
@@ -83,7 +83,7 @@ public abstract class ActionBase {
      * @throws ServletException
      * @throws IOException
      */
-    protected void forward(ForwardConst target) throws ServletException, IOException{
+    protected void forward(ForwardConst target) throws ServletException, IOException {
 
         //jspファイルの相対パスを作成
         String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
@@ -97,14 +97,16 @@ public abstract class ActionBase {
     /**
      * URLを構築しリダイレクトを行う
      * @param action パラメータに設定する値
+     * @param command パラメータに設定する値
      * @throws ServletException
      * @throws IOException
      */
-    protected void redirect(ForwardConst action, ForwardConst command) throws ServletException, IOException{
+    protected void redirect(ForwardConst action, ForwardConst command)
+            throws ServletException, IOException {
 
         //URLを構築
         String redirectUrl = request.getContextPath() + "/?action=" + action.getValue();
-        if(command != null) {
+        if (command != null) {
             redirectUrl = redirectUrl + "&command=" + command.getValue();
         }
 
@@ -119,12 +121,12 @@ public abstract class ActionBase {
      * @throws ServletException
      * @throws IOException
      */
-    protected boolean checktoken() throws ServletException, IOException{
+    protected boolean checkToken() throws ServletException, IOException {
 
         //パラメータからtokenの値を取得
         String _token = getRequestParam(AttributeConst.TOKEN);
 
-        if(_token == null || !(_token.equals(getTokenId()))) {
+        if (_token == null || !(_token.equals(getTokenId()))) {
 
             //tokenが設定されていない、またはセッションIDと一致しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
@@ -133,6 +135,7 @@ public abstract class ActionBase {
         } else {
             return true;
         }
+
     }
 
     /**
@@ -145,12 +148,12 @@ public abstract class ActionBase {
 
     /**
      * リクエストから表示を要求されているページ数を取得し、返却する
-     * @return 要求されているぺージ数(要求がない場合は1)
+     * @return 要求されているページ数(要求がない場合は1)
      */
     protected int getPage() {
         int page;
         page = toNumber(request.getParameter(AttributeConst.PAGE.getValue()));
-        if(page == Integer.MIN_VALUE) {
+        if (page == Integer.MIN_VALUE) {
             page = 1;
         }
         return page;
@@ -177,7 +180,7 @@ public abstract class ActionBase {
      * @return 変換後LocalDateインスタンス
      */
     protected LocalDate toLocalDate(String strDate) {
-        if(strDate == null || strDate.equals("")) {
+        if (strDate == null || strDate.equals("")) {
             return LocalDate.now();
         }
         return LocalDate.parse(strDate);
@@ -224,7 +227,7 @@ public abstract class ActionBase {
      * セッションスコープから指定された名前のパラメータを除去する
      * @param key パラメータ名
      */
-    protected void remoevSessionScope(AttributeConst key) {
+    protected void removeSessionScope(AttributeConst key) {
         request.getSession().removeAttribute(key.getValue());
     }
 
@@ -237,4 +240,5 @@ public abstract class ActionBase {
     protected <R> R getContextScope(PropertyConst key) {
         return (R) context.getAttribute(key.getValue());
     }
+
 }

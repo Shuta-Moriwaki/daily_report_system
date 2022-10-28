@@ -1,6 +1,3 @@
-/**
- *
- */
 package constants;
 
 /**
@@ -52,6 +49,7 @@ public interface JpaConst {
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
 
+
     //NamedQueryのnameとquery
     //全ての従業員をidの降順に取得する
     String Q_EMP_GET_ALL = ENTITY_EMP + ".getALL"; //name
@@ -63,11 +61,12 @@ public interface JpaConst {
 
     //社員番号とハッシュ化済パスワードを条件に未削除の従業員を取得する
     String Q_EMP_GET_BY_CODE_AND_PASS = ENTITY_EMP + ".getByCodeAndPass";
-    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "select e from Employee as e where e.deleteFlag = 0 and e.code = :" + JPQL_PARM_CODE + "and e.password = :" + JPQL_PARM_PASSWORD;
+    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "select e from Employee as e where e.deleteFlag = 0 and e.code = :" + JPQL_PARM_CODE + " and e.password = :" + JPQL_PARM_PASSWORD;
 
     //指定した社員番号を保持する従業員の件数を取得する
     String Q_EMP_COUNT_REGISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
     String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "select count(e) from Employee as e where e.code = :" + JPQL_PARM_CODE;
+
 
     //全ての日報をidの降順に取得する
     String Q_REP_GET_ALL = ENTITY_REP + ".getAll";

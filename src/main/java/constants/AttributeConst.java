@@ -1,7 +1,7 @@
 package constants;
 
 /**
- * 画面の項目値等を定義するEmunクラス
+ * 画面の項目値等を定義するEnumクラス
  *
  */
 public enum AttributeConst {
@@ -26,10 +26,10 @@ public enum AttributeConst {
     //従業員管理
     EMPLOYEE("employee"),
     EMPLOYEES("employees"),
-    EMP_COUNT("employee_count"),
+    EMP_COUNT("employees_count"),
     EMP_ID("id"),
     EMP_CODE("code"),
-    EMP_PASS("pass"),
+    EMP_PASS("password"),
     EMP_NAME("name"),
     EMP_ADMIN_FLG("admin_flag"),
 
@@ -70,7 +70,5 @@ public enum AttributeConst {
     public Integer getIntegerValue() {
         return this.i;
     }
-
-
 
 }
