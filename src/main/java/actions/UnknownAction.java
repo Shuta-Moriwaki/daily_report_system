@@ -7,11 +7,9 @@ import javax.servlet.ServletException;
 import constants.ForwardConst;
 
 /**
- *
- * エラー発生時の処理を行うActionクラス
+ * エラー発生時の処理行うActionクラス
  *
  */
-
 public class UnknownAction extends ActionBase {
 
     /**
@@ -22,6 +20,6 @@ public class UnknownAction extends ActionBase {
 
         //エラー画面を表示
         forward(ForwardConst.FW_ERR_UNKNOWN);
-    }
 
+    }
 }

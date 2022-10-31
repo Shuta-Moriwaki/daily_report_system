@@ -24,6 +24,7 @@ public enum MessageConst {
     E_NOTITLE("タイトルを入力してください。"),
     E_NOCONTENT("内容を入力してください。");
 
+
     /**
      * 文字列
      */
